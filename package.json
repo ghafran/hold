@@ -1,0 +1,38 @@
+{
+  "name": "milli-epoch",
+  "description": "Hybrid of lock and once. Ensures only one invoke is run at any given time.",
+  "version": "0.0.1",
+  "author": "Ghafran Abbas <ghafranabbas@gmail.com>",
+  "homepage": "https://github.com/socialradar/hold",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/socialradar/hold"
+  },
+  "main": "lib/hold.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "~1.8.0",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-simple-mocha": "~0.4.0",
+    "mocha": "~1.13.0",
+    "grunt-bump": "0.0.11"
+  },
+  "keywords": [
+    "lock",
+    "once",
+    "hold"
+  ],
+  "bugs": {
+    "url": "https://github.com/socialradar/hold/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "license": "MIT"
+}
