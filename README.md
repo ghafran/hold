@@ -1,5 +1,6 @@
 hold
 ==============
+Still in development!!!! Does not currently work...
 
 Hybrid of lock and once. Ensures only one invoke is run at any given time.
 
