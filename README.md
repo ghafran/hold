@@ -1,8 +1,18 @@
+[![Build Status](https://secure.travis-ci.org/socialradar/hold.png)](http://travis-ci.org/socialradar/hold)
+
 hold
 ==============
 Ensures async function is only called once and caches results for other calls.
 
-[![Build Status](https://secure.travis-ci.org/socialradar/hold.png)](http://travis-ci.org/socialradar/hold)
+When multiple calls are made simulateously, only the first call is allowed to perform the work. 
+
+All other callers are held until the caller doing work has completed and shares the results to all held callers.
+
+```js
+var Hold = require('hold');
+var hold = Hold();
+hold(work, results);
+```
 
 ## Installation
 
