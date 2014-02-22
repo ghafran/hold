@@ -27,4 +27,17 @@ describe('hold cases', function() {
             done();
         });
     });
+    
+    it('expire', function(done){
+        
+        var hold = new Hold(1000);
+        hold(function(until){
+            
+            until(null, 'done');
+        }, function(err, result){
+            
+            expect(result).to.equal('done');
+            done();
+        });
+    });
 });
