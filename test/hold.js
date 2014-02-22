@@ -3,15 +3,27 @@ process.env.NODE_ENV = 'test';
 var expect = require('chai').expect,
 should = require('chai').should;
 
-var epoch = require('../lib/hold');
+var Hold = require('../lib/hold');
 
-describe('hold', function() {
+describe('hold cases', function() {
 
-    describe('functions', function() {
+    it('returns function', function(done){
         
-        it('basic', function(done){
+        var hold = new Hold();
         
-            expect(1).to.be.equal(1);
+        expect(hold).to.be.a('function');
+        done();
+    });
+    
+    it('basic', function(done){
+        
+        var hold = new Hold();
+        hold(function(until){
+            
+            until(null, 'done');
+        }, function(err, result){
+            
+            expect(result).to.equal('done');
             done();
         });
     });
