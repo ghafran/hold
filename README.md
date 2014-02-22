@@ -1,7 +1,5 @@
 hold
 ==============
-Still in development!!!! Does not currently work...
-
 Ensures async function is only called once and caches results for other calls.
 
 [![Build Status](https://secure.travis-ci.org/socialradar/hold.png)](http://travis-ci.org/socialradar/hold)
