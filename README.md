@@ -2,7 +2,7 @@ hold
 ==============
 Still in development!!!! Does not currently work...
 
-Hybrid of lock and once. Ensures only one invoke is run at any given time.
+Ensures async function is only called once and caches results for other calls.
 
 [![Build Status](https://secure.travis-ci.org/socialradar/hold.png)](http://travis-ci.org/socialradar/hold)
 
