@@ -1,7 +1,7 @@
 {
   "name": "hold",
   "description": "Ensures async function is only called once and caches results for other calls.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Ghafran Abbas <ghafranabbas@gmail.com>",
   "homepage": "https://github.com/socialradar/hold",
   "repository": {

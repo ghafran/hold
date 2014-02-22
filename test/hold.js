@@ -213,4 +213,69 @@ describe('hold cases', function() {
             done();
         }, 30);
     });
+    
+    it('timeout', function(done) {
+
+        var hold = new Hold({ timeout: 10 });
+
+        hold(function(until) {
+
+            // until never called
+        }, function(err, result) {
+            
+            expect(err).to.exist;
+            done();
+        });
+    });
+    
+    it('concurrent timeout', function(done) {
+
+        var hold = new Hold({ timeout: 5 });
+        var workCount = 0;
+        var workFailedCount = 0;
+        var resultCount = 0;
+        var resultFailedCount = 0;
+        var data = new Date().getTime();
+        
+        var work = function(until) {
+
+            workCount++;
+            setTimeout(function(u){
+                u(null, data);
+            }, 5, until);
+        };
+        
+        var workFailed = function(until) {
+
+            workFailedCount++;
+            // never call until
+        };
+        
+        var finish = function(err, result) {
+            resultCount++;
+            expect(err).to.not.exist;
+            expect(result).to.equal(data);
+        };
+        
+        var finishFailed = function(err, result) {
+            resultFailedCount++;
+            expect(err).to.exist;
+        };
+        
+        // make multiple simulateous calls to hold
+        hold(workFailed, finishFailed); // fail first
+        hold(workFailed, finishFailed); // fail second
+        for (var i = 0; i < 10; i++) {
+            hold(work, finish);
+        }
+
+        setTimeout(function() {
+            
+            expect(workFailedCount).to.equal(2);
+            expect(resultFailedCount).to.equal(2);
+            expect(workCount).to.equal(1);
+            expect(resultCount).to.equal(10);
+            done();
+        }, 30);
+    });
 });
