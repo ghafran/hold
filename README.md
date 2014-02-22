@@ -29,8 +29,9 @@ hold(function (until) {
 }, function(err, result){
     
     // all waiting calls are now given output of doSomething here, includeing first caller
+    // results are cached until expiration is reached
     console.log(result);
-});
+}, 1000);
 
 function doSomething(callback){
     setTimeout(function(callback){ 
