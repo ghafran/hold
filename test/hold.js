@@ -102,7 +102,7 @@ describe('hold cases', function() {
             workCount++;
             setTimeout(function(u){
                 u(null, data);
-            }, 10, until);
+            }, 5, until);
         };
 
         var finish = function(err, result) {
@@ -119,7 +119,7 @@ describe('hold cases', function() {
             expect(workCount).to.equal(1); // only the first call did work
             expect(resultCount).to.equal(10); // all calls got the result from first call
             done();
-        }, 20);
+        }, 30);
     });
     
     it('on error use next caller', function(done) {
@@ -131,7 +131,7 @@ describe('hold cases', function() {
 
             setTimeout(function(u){
                 u(new Error('fake error'));
-            }, 10, until);
+            }, 5, until);
         }, function(err, result) {
             
             expect(err).to.exist;
@@ -141,7 +141,7 @@ describe('hold cases', function() {
 
             setTimeout(function(u){
                 u(null, data);
-            }, 10, until);
+            }, 5, until);
         }, function(err, result) {
             
             expect(err).to.not.exist;
@@ -175,7 +175,7 @@ describe('hold cases', function() {
             workCount++;
             setTimeout(function(u){
                 u(null, data);
-            }, 10, until);
+            }, 5, until);
         };
         
         var workFailed = function(until) {
@@ -183,7 +183,7 @@ describe('hold cases', function() {
             workFailedCount++;
             setTimeout(function(u){
                 u(new Error('fake error'));
-            }, 10, until);
+            }, 5, until);
         };
         
         var finish = function(err, result) {
@@ -198,17 +198,19 @@ describe('hold cases', function() {
         };
         
         // make multiple simulateous calls to hold
-        hold(workFailed, finishFailed);
+        hold(workFailed, finishFailed); // fail first
+        hold(workFailed, finishFailed); // fail second
         for (var i = 0; i < 10; i++) {
             hold(work, finish);
         }
 
         setTimeout(function() {
+            
+            expect(workFailedCount).to.equal(2);
+            expect(resultFailedCount).to.equal(2);
             expect(workCount).to.equal(1);
-            expect(workFailedCount).to.equal(1);
             expect(resultCount).to.equal(10);
-            expect(resultFailedCount).to.equal(1);
             done();
-        }, 20);
+        }, 30);
     });
 });
