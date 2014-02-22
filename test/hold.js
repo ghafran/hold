@@ -103,6 +103,7 @@ describe('hold cases', function() {
 
         var finish = function(err, result) {
             resultCount++;
+            expect(result).to.equal('done');
         };
         
         // make multiple simulateous calls to hold
