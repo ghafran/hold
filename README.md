@@ -18,7 +18,7 @@ code example:
 var Hold = require('hold');
 var hold = Hold();
 
-hold('key', function (until) {
+hold(function (until) {
   
   // only first call enters here
   doSomething(function(err, result){
