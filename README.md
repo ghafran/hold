@@ -49,6 +49,37 @@ function doSomething(callback){
 }
 ```
 
+## Usage With Key
+
+If multiple holds are required based on a key, a `key` parameter can be passed as first argument.
+
+```js
+var Hold = require('hold');
+var hold = Hold();
+
+hold('key', function (done) {
+  
+  // only one call enters here at any given time
+  doSomething(function(err, result){
+    
+    // callback with results of doSomething
+    done(err, result);
+  });
+}, function(err, result){
+    
+    // all waiting calls are now given output of doSomething here, including first caller
+    // results are cached until expiration is reached
+    console.log(result);
+});
+
+function doSomething(callback){
+    setTimeout(function(callback){ 
+        var result = "i finished";
+        callback(null, result); 
+    }, 1000, callback);
+}
+```
+
 ## options
 
 `options` in an object with the following possible properties:
