@@ -59,7 +59,7 @@ var hold = Hold();
 
 hold('key', function (done) {
   
-  // only one call enters here at any given time
+  // only one call enters here at any given time for a given key
   doSomething(function(err, result){
     
     // callback with results of doSomething
