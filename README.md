@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/ghafran/hold.png)](http://travis-ci.org/ghafran/hold)
+[![NSP Status](https://nodesecurity.io/orgs/ghafran/projects/920db60b-d328-425f-8ef1-6832d94c2bf1/badge)](https://nodesecurity.io/orgs/ghafran/projects/920db60b-d328-425f-8ef1-6832d94c2bf1)
 
 hold
 ==============
