@@ -1,10 +1,10 @@
-[![Build Status](https://secure.travis-ci.org/socialradar/hold.png)](http://travis-ci.org/socialradar/hold)
+[![Build Status](https://secure.travis-ci.org/ghafran/hold.png)](http://travis-ci.org/ghafran/hold)
 
 hold
 ==============
 Ensures async function is only called once and caches results for other calls.
 
-When multiple calls are made simulateously, only the first call is allowed to perform the work. 
+When multiple calls are made simulateously, only the first call is allowed to perform the work.
 
 All other callers are held until the caller doing work has completed and shares the results to all held callers.
 
@@ -27,24 +27,24 @@ var Hold = require('hold');
 var hold = Hold();
 
 hold(function (done) {
-  
+
   // only one call enters here at any given time
   doSomething(function(err, result){
-    
+
     // callback with results of doSomething
     done(err, result);
   });
 }, function(err, result){
-    
+
     // all waiting calls are now given output of doSomething here, including first caller
     // results are cached until expiration is reached
     console.log(result);
 });
 
 function doSomething(callback){
-    setTimeout(function(callback){ 
+    setTimeout(function(callback){
         var result = "i finished";
-        callback(null, result); 
+        callback(null, result);
     }, 1000, callback);
 }
 ```
@@ -58,24 +58,24 @@ var Hold = require('hold');
 var hold = Hold();
 
 hold('key', function (done) {
-  
+
   // only one call enters here at any given time for a given key
   doSomething(function(err, result){
-    
+
     // callback with results of doSomething
     done(err, result);
   });
 }, function(err, result){
-    
+
     // all waiting calls are now given output of doSomething here, including first caller
     // results are cached until expiration is reached
     console.log(result);
 });
 
 function doSomething(callback){
-    setTimeout(function(callback){ 
+    setTimeout(function(callback){
         var result = "i finished";
-        callback(null, result); 
+        callback(null, result);
     }, 1000, callback);
 }
 ```

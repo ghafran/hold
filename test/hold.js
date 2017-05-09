@@ -27,7 +27,7 @@ describe('no key', function() {
             done();
         });
     });
-    
+
     it('basic with expire option', function(done) {
 
         var hold = new Hold(1000);
@@ -41,10 +41,12 @@ describe('no key', function() {
             done();
         });
     });
-    
+
     it('basic with options object', function(done) {
 
-        var hold = new Hold({ expires: 1000 });
+        var hold = new Hold({
+            expires: 1000
+        });
         var data = new Date().getTime();
         hold(function(until) {
 
@@ -55,33 +57,35 @@ describe('no key', function() {
             done();
         });
     });
-    
+
     it('expire', function(done) {
 
-        var hold = new Hold({ expires: 10 });
+        var hold = new Hold({
+            expires: 10
+        });
         var result1;
         var result2;
         var result3;
-        
+
         var work = function(until) {
 
             until(null, new Date().getTime());
         };
-        
+
         hold(work, function(err, result) {
-            
+
             result1 = result;
         });
-        
+
         hold(work, function(err, result) {
-            
+
             result2 = result;
             expect(result2).to.equal(result1);
         });
-        
-        setTimeout(function(){
+
+        setTimeout(function() {
             hold(work, function(err, result) {
-    
+
                 result3 = result;
                 expect(result3).to.not.equal(result1); // result should have expired
                 done();
@@ -96,11 +100,11 @@ describe('no key', function() {
         var workCount = 0;
         var resultCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
@@ -109,7 +113,7 @@ describe('no key', function() {
             resultCount++;
             expect(result).to.equal(data);
         };
-        
+
         // make multiple simulateous calls to hold
         for (var i = 0; i < 10; i++) {
             hold(work, finish);
@@ -121,46 +125,48 @@ describe('no key', function() {
             done();
         }, 30);
     });
-    
+
     it('on error use next caller', function(done) {
 
-        var hold = new Hold({ expires: 10 });
+        var hold = new Hold({
+            expires: 10
+        });
         var data = new Date().getTime();
-        
+
         hold(function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(new Error('fake error'));
             }, 5, until);
         }, function(err, result) {
-            
+
             expect(err).to.exist;
         });
-        
+
         hold(function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         }, function(err, result) {
-            
+
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         });
-        
+
         hold(function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, new Date().getTime());
             }, 2, until);
         }, function(err, result) {
-            
+
             expect(err).to.not.exist;
             expect(result).to.equal(data);
             done();
         });
     });
-    
+
     it('concurrent errors', function(done) {
 
         var hold = new Hold();
@@ -169,34 +175,34 @@ describe('no key', function() {
         var resultCount = 0;
         var resultFailedCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
-        
+
         var workFailed = function(until) {
 
             workFailedCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(new Error('fake error'));
             }, 5, until);
         };
-        
+
         var finish = function(err, result) {
             resultCount++;
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         };
-        
+
         var finishFailed = function(err, result) {
             resultFailedCount++;
             expect(err).to.exist;
         };
-        
+
         // make multiple simulateous calls to hold
         hold(workFailed, finishFailed); // fail first
         hold(workFailed, finishFailed); // fail second
@@ -205,7 +211,7 @@ describe('no key', function() {
         }
 
         setTimeout(function() {
-            
+
             expect(workFailedCount).to.equal(2);
             expect(resultFailedCount).to.equal(2);
             expect(workCount).to.equal(1);
@@ -213,55 +219,59 @@ describe('no key', function() {
             done();
         }, 30);
     });
-    
+
     it('timeout', function(done) {
 
-        var hold = new Hold({ timeout: 10 });
+        var hold = new Hold({
+            timeout: 10
+        });
 
         hold(function(until) {
 
             // until never called
         }, function(err, result) {
-            
+
             expect(err).to.exist;
             done();
         });
     });
-    
+
     it('concurrent timeout', function(done) {
 
-        var hold = new Hold({ timeout: 5 });
+        var hold = new Hold({
+            timeout: 5
+        });
         var workCount = 0;
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
-        
+
         var workFailed = function(until) {
 
             workFailedCount++;
             // never call until
         };
-        
+
         var finish = function(err, result) {
             resultCount++;
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         };
-        
+
         var finishFailed = function(err, result) {
             resultFailedCount++;
             expect(err).to.exist;
         };
-        
+
         // make multiple simulateous calls to hold
         hold(workFailed, finishFailed); // fail first
         hold(workFailed, finishFailed); // fail second
@@ -270,7 +280,7 @@ describe('no key', function() {
         }
 
         setTimeout(function() {
-            
+
             expect(workFailedCount).to.equal(2);
             expect(resultFailedCount).to.equal(2);
             expect(workCount).to.equal(1);
@@ -295,7 +305,7 @@ describe('with key', function() {
             done();
         });
     });
-    
+
     it('basic with expire option', function(done) {
 
         var hold = new Hold(1000);
@@ -309,10 +319,12 @@ describe('with key', function() {
             done();
         });
     });
-    
+
     it('basic with options object', function(done) {
 
-        var hold = new Hold({ expires: 1000 });
+        var hold = new Hold({
+            expires: 1000
+        });
         var data = new Date().getTime();
         hold('key', function(until) {
 
@@ -323,33 +335,35 @@ describe('with key', function() {
             done();
         });
     });
-    
+
     it('expire', function(done) {
 
-        var hold = new Hold({ expires: 10 });
+        var hold = new Hold({
+            expires: 10
+        });
         var result1;
         var result2;
         var result3;
-        
+
         var work = function(until) {
 
             until(null, new Date().getTime());
         };
-        
+
         hold('key', work, function(err, result) {
-            
+
             result1 = result;
         });
-        
+
         hold('key', work, function(err, result) {
-            
+
             result2 = result;
             expect(result2).to.equal(result1);
         });
-        
-        setTimeout(function(){
+
+        setTimeout(function() {
             hold('key', work, function(err, result) {
-    
+
                 result3 = result;
                 expect(result3).to.not.equal(result1); // result should have expired
                 done();
@@ -364,11 +378,11 @@ describe('with key', function() {
         var workCount = 0;
         var resultCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
@@ -377,7 +391,7 @@ describe('with key', function() {
             resultCount++;
             expect(result).to.equal(data);
         };
-        
+
         // make multiple simulateous calls to hold
         for (var i = 0; i < 10; i++) {
             hold('key', work, finish);
@@ -389,46 +403,48 @@ describe('with key', function() {
             done();
         }, 30);
     });
-    
+
     it('on error use next caller', function(done) {
 
-        var hold = new Hold({ expires: 10 });
+        var hold = new Hold({
+            expires: 10
+        });
         var data = new Date().getTime();
-        
+
         hold('key', function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(new Error('fake error'));
             }, 5, until);
         }, function(err, result) {
-            
+
             expect(err).to.exist;
         });
-        
+
         hold('key', function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         }, function(err, result) {
-            
+
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         });
-        
+
         hold('key', function(until) {
 
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, new Date().getTime());
             }, 2, until);
         }, function(err, result) {
-            
+
             expect(err).to.not.exist;
             expect(result).to.equal(data);
             done();
         });
     });
-    
+
     it('concurrent errors', function(done) {
 
         var hold = new Hold();
@@ -437,34 +453,34 @@ describe('with key', function() {
         var resultCount = 0;
         var resultFailedCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
-        
+
         var workFailed = function(until) {
 
             workFailedCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(new Error('fake error'));
             }, 5, until);
         };
-        
+
         var finish = function(err, result) {
             resultCount++;
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         };
-        
+
         var finishFailed = function(err, result) {
             resultFailedCount++;
             expect(err).to.exist;
         };
-        
+
         // make multiple simulateous calls to hold
         hold('key', workFailed, finishFailed); // fail first
         hold('key', workFailed, finishFailed); // fail second
@@ -473,7 +489,7 @@ describe('with key', function() {
         }
 
         setTimeout(function() {
-            
+
             expect(workFailedCount).to.equal(2);
             expect(resultFailedCount).to.equal(2);
             expect(workCount).to.equal(1);
@@ -481,55 +497,59 @@ describe('with key', function() {
             done();
         }, 30);
     });
-    
+
     it('timeout', function(done) {
 
-        var hold = new Hold({ timeout: 10 });
+        var hold = new Hold({
+            timeout: 10
+        });
 
         hold('key', function(until) {
 
             // until never called
         }, function(err, result) {
-            
+
             expect(err).to.exist;
             done();
         });
     });
-    
+
     it('concurrent timeout', function(done) {
 
-        var hold = new Hold({ timeout: 5 });
+        var hold = new Hold({
+            timeout: 5
+        });
         var workCount = 0;
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
         var data = new Date().getTime();
-        
+
         var work = function(until) {
 
             workCount++;
-            setTimeout(function(u){
+            setTimeout(function(u) {
                 u(null, data);
             }, 5, until);
         };
-        
+
         var workFailed = function(until) {
 
             workFailedCount++;
             // never call until
         };
-        
+
         var finish = function(err, result) {
             resultCount++;
             expect(err).to.not.exist;
             expect(result).to.equal(data);
         };
-        
+
         var finishFailed = function(err, result) {
             resultFailedCount++;
             expect(err).to.exist;
         };
-        
+
         // make multiple simulateous calls to hold
         hold('key', workFailed, finishFailed); // fail first
         hold('key', workFailed, finishFailed); // fail second
@@ -538,7 +558,7 @@ describe('with key', function() {
         }
 
         setTimeout(function() {
-            
+
             expect(workFailedCount).to.equal(2);
             expect(resultFailedCount).to.equal(2);
             expect(workCount).to.equal(1);
@@ -557,7 +577,7 @@ describe('multiple keys', function() {
         var resultCount = 0;
         var data = 0;
         var results = [];
-        
+
         var work = function(until) {
 
             workCount++;
@@ -569,12 +589,12 @@ describe('multiple keys', function() {
             expect(results).to.not.contain(result);
             results.push(result);
         };
-        
-        var s = function(i, work, finish){
-            
+
+        var s = function(i, work, finish) {
+
             hold(i.toString(), work, finish);
         };
-            
+
         // make multiple simulateous calls to hold
         for (var i = 0; i < 10; i++) {
             s(i, work, finish);
@@ -586,7 +606,7 @@ describe('multiple keys', function() {
             done();
         }, 30);
     });
-    
+
     it('concurrent same keys', function(done) {
 
         var hold = new Hold();
@@ -604,12 +624,12 @@ describe('multiple keys', function() {
             resultCount++;
             expect(result).to.equal(0);
         };
-        
-        var s = function(i, work, finish){
-            
+
+        var s = function(i, work, finish) {
+
             hold('key', work, finish);
         };
-            
+
         // make multiple simulateous calls to hold
         for (var i = 0; i < 10; i++) {
             s(i, work, finish);

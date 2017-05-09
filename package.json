@@ -1,40 +1,40 @@
 {
-  "name": "hold",
-  "description": "Ensures async function is only called once and caches results for other calls.",
-  "version": "0.0.10",
-  "author": "Ghafran Abbas <ghafranabbas@gmail.com>",
-  "homepage": "https://github.com/socialradar/hold",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/socialradar/hold"
-  },
-  "main": "lib/hold.js",
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "chai": "~1.8.1",
-    "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.9",
-    "grunt-contrib-jshint": "~0.6.5",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-simple-mocha": "~0.4.0",
-    "grunt-bump": "0.0.11",
-    "mocha": "~1.13.0"
-  },
-  "keywords": [
-    "lock",
-    "once",
-    "hold",
-    "throttle",
-    "async"
-  ],
-  "bugs": {
-    "url": "https://github.com/socialradar/hold/issues"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "license": "MIT"
+    "name": "hold",
+    "description": "Ensures async function is only called once and caches results for other calls.",
+    "version": "0.0.11",
+    "author": "Ghafran Abbas <ghafranabbas@gmail.com>",
+    "homepage": "https://github.com/ghafran/hold",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ghafran/hold"
+    },
+    "main": "lib/hold.js",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "chai": "~3.5.0",
+        "grunt": "~1.0.1",
+        "grunt-cli": "~1.2.0",
+        "grunt-contrib-jshint": "~1.1.0",
+        "grunt-contrib-watch": "~1.0.0",
+        "grunt-simple-mocha": "~0.4.1",
+        "grunt-bump": "0.8.0",
+        "mocha": "~3.3.0"
+    },
+    "keywords": [
+        "lock",
+        "once",
+        "hold",
+        "throttle",
+        "async"
+    ],
+    "bugs": {
+        "url": "https://github.com/ghafran/hold/issues"
+    },
+    "directories": {
+        "test": "test"
+    },
+    "license": "MIT"
 }
