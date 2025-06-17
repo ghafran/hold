@@ -17,7 +17,7 @@ describe('no key', function() {
     it('basic', function(done) {
 
         var hold = new Hold();
-        var data = new Date().getTime();
+        var data = Date.now();
         hold(function(until) {
 
             until(null, data);
@@ -31,7 +31,7 @@ describe('no key', function() {
     it('basic with expire option', function(done) {
 
         var hold = new Hold(1000);
-        var data = new Date().getTime();
+        var data = Date.now();
         hold(function(until) {
 
             until(null, data);
@@ -47,7 +47,7 @@ describe('no key', function() {
         var hold = new Hold({
             expires: 1000
         });
-        var data = new Date().getTime();
+        var data = Date.now();
         hold(function(until) {
 
             until(null, data);
@@ -69,7 +69,7 @@ describe('no key', function() {
 
         var work = function(until) {
 
-            until(null, new Date().getTime());
+            until(null, Date.now());
         };
 
         hold(work, function(err, result) {
@@ -99,7 +99,7 @@ describe('no key', function() {
         var hold = new Hold();
         var workCount = 0;
         var resultCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
@@ -131,7 +131,7 @@ describe('no key', function() {
         var hold = new Hold({
             expires: 10
         });
-        var data = new Date().getTime();
+        var data = Date.now();
 
         hold(function(until) {
 
@@ -157,7 +157,7 @@ describe('no key', function() {
         hold(function(until) {
 
             setTimeout(function(u) {
-                u(null, new Date().getTime());
+                u(null, Date.now());
             }, 2, until);
         }, function(err, result) {
 
@@ -174,7 +174,7 @@ describe('no key', function() {
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
@@ -245,7 +245,7 @@ describe('no key', function() {
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
@@ -295,7 +295,7 @@ describe('with key', function() {
     it('basic', function(done) {
 
         var hold = new Hold();
-        var data = new Date().getTime();
+        var data = Date.now();
         hold('key', function(until) {
 
             until(null, data);
@@ -309,7 +309,7 @@ describe('with key', function() {
     it('basic with expire option', function(done) {
 
         var hold = new Hold(1000);
-        var data = new Date().getTime();
+        var data = Date.now();
         hold('key', function(until) {
 
             until(null, data);
@@ -325,7 +325,7 @@ describe('with key', function() {
         var hold = new Hold({
             expires: 1000
         });
-        var data = new Date().getTime();
+        var data = Date.now();
         hold('key', function(until) {
 
             until(null, data);
@@ -347,7 +347,7 @@ describe('with key', function() {
 
         var work = function(until) {
 
-            until(null, new Date().getTime());
+            until(null, Date.now());
         };
 
         hold('key', work, function(err, result) {
@@ -377,7 +377,7 @@ describe('with key', function() {
         var hold = new Hold();
         var workCount = 0;
         var resultCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
@@ -409,7 +409,7 @@ describe('with key', function() {
         var hold = new Hold({
             expires: 10
         });
-        var data = new Date().getTime();
+        var data = Date.now();
 
         hold('key', function(until) {
 
@@ -435,7 +435,7 @@ describe('with key', function() {
         hold('key', function(until) {
 
             setTimeout(function(u) {
-                u(null, new Date().getTime());
+                u(null, Date.now());
             }, 2, until);
         }, function(err, result) {
 
@@ -452,7 +452,7 @@ describe('with key', function() {
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
@@ -523,7 +523,7 @@ describe('with key', function() {
         var workFailedCount = 0;
         var resultCount = 0;
         var resultFailedCount = 0;
-        var data = new Date().getTime();
+        var data = Date.now();
 
         var work = function(until) {
 
